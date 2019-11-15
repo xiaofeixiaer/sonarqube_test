@@ -32,4 +32,5 @@ out/
 .vscode/
 
 ### h2 db catch ##
-data
+/data/
+*.mv.db

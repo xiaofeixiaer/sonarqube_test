@@ -1,5 +1,7 @@
 package com.hw.tools.route.trace.service
 
+import com.hw.tools.route.trace.service.data.IpInfoResponse
+import com.hw.tools.route.trace.service.data.IpLocation
 import org.springframework.http.MediaType
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.stereotype.Service

@@ -1,4 +1,4 @@
-package com.hw.tools.route.trace.service
+package com.hw.tools.route.trace.service.data
 
 data class IpLocation(
         val ip: String,
