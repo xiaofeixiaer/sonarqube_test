@@ -8,20 +8,23 @@ import org.springframework.web.client.getForObject
 import java.nio.charset.StandardCharsets
 
 @Service
-class IpLocationService {
+class IpLocationService(
+        private val restTemplate: RestTemplate = RestTemplate()
+) {
 
-    fun queryLocation(host: String): IpLocation {
-        return queryFromTB(host).data
+    init {
+        restTemplate.messageConverters.add(TBMappingJackson2HttpMessageConverter())
     }
 
-    private fun queryFromTB(host: String): IpInfoResponse {
-        val restTemplate = RestTemplate()
-        restTemplate.messageConverters.add(TBMappingJackson2HttpMessageConverter())
-        return restTemplate.getForObject(QUERY_API_URL, mapOf("ip" to host))
+    fun queryLocation(host: String): IpLocation {
+        val uriVariables = mapOf(HOST_KEY_NAME to host)
+        val ipInfoResponse = restTemplate.getForObject<IpInfoResponse>(QUERY_API_URL, uriVariables)
+        return ipInfoResponse.data
     }
 
     companion object {
-        const val QUERY_API_URL = "http://ip.taobao.com/service/getIpInfo2.php?ip={ip}"
+        const val HOST_KEY_NAME = "ip"
+        const val QUERY_API_URL = "http://ip.taobao.com/service/getIpInfo2.php?ip={${HOST_KEY_NAME}}"
     }
 }
 
