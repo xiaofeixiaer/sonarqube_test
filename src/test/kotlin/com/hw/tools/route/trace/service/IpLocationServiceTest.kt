@@ -16,6 +16,9 @@ internal class IpLocationServiceTest {
         val host = "61.135.169.125"
         val ipLocation = ipLocationService.queryLocation(host)
         assertEquals(ipLocation.ip, host)
+        assertEquals(ipLocation.country, "中国")
+        assertEquals(ipLocation.region, "北京")
+        assertEquals(ipLocation.city, "北京")
+        assertEquals(ipLocation.isp, "联通")
     }
-
 }
