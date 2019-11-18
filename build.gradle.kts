@@ -13,7 +13,7 @@ version = "0.0.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 repositories {
-//    mavenCentral()
+    mavenCentral()
     maven {
         url = uri("http://maven.aliyun.com/nexus/content/groups/public/")
     }
@@ -34,9 +34,7 @@ dependencies {
 
     implementation("io.springfox:springfox-swagger-ui:2.9.2")
     implementation("io.springfox:springfox-swagger2:2.9.2")
-
-    implementation("jpcap:jpcap:0.1.18-002")
-
+    
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
