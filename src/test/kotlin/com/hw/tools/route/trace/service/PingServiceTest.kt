@@ -13,8 +13,8 @@ internal class PingServiceTest {
 
     @Test
     fun `should return right ping response when ping localhost`() {
-        val host = "localhost"
+        val host = "8.8.8.8"
         val result = pingService.ping(host)
-        assertEquals("127.0.0.1", result.from)
+        assertEquals("8.8.8.8", result.from)
     }
 }
