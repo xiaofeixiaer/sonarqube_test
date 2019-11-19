@@ -30,7 +30,7 @@ class IpLocationService(
     }
 }
 
-class TBMappingJackson2HttpMessageConverter() : MappingJackson2HttpMessageConverter() {
+class TBMappingJackson2HttpMessageConverter : MappingJackson2HttpMessageConverter() {
     init {
         this.supportedMediaTypes = listOf(MediaType("text", "html", StandardCharsets.UTF_8))
     }
