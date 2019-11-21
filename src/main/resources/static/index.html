@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+
+    <script src="jquery-3.4.1.min.js"></script>
+</head>
+<body>
+
+<div id="text">
+</div>
+
+<div>
+    <label for="ip">目标IP地址</label><input id="ip"/>
+    <br>
+    <label for="ip">TTL</label><input id="ttl"/>
+    <button onclick="tracerIp()">Commit</button>
+</div>
+
+<script>
+    function tracerIp() {
+        var ip = $("#ip").val();
+        var ttl = $("#ttl").val();
+        console.log(ip);
+        $.ajax({
+            url: "/Tracer",
+            data: {
+                host: ip,
+                ttl: ttl
+            },
+            method: 'GET',
+            success: function (result) {
+                console.log(JSON.stringify(result));
+                $("#text").html(result['first']['from'] + "   " + result['second']['city']);
+            }
+        });
+    }
+</script>
+</body>
+</html>
