@@ -14,7 +14,7 @@ class TracerController(
 ) {
 
     @GetMapping("/Tracer")
-    fun abc(host: String, ttl: Int): Pair<PingResponse, IpLocation> {
+    fun ping(host: String, ttl: Int): Pair<PingResponse, IpLocation> {
         val pingResponse = pingService.ping(host, ttl)
         val ipLocation = ipLocationService.queryLocation(pingResponse.from)
         return Pair(pingResponse, ipLocation)
