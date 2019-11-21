@@ -8,22 +8,23 @@
 </head>
 <body>
 
-<div id="text">
-</div>
-
 <div>
     <label for="ip">目标IP地址</label><input id="ip"/>
     <br>
     <label for="ttl">TTL</label><input id="ttl"/>
 
-    <button onclick="tracerIp()">Commit</button>
+    <button id="button-commit" onclick="tracerIp()">Tracer</button>
+</div>
+<br>
+<div id="text">
 </div>
 
+<div id="error">
+</div>
 <script>
     function tracerIp() {
         var ip = $("#ip").val();
         var ttl = $("#ttl").val();
-        console.log(ip);
         $.ajax({
             url: "/Tracer",
             data: {
@@ -33,9 +34,18 @@
             method: 'GET',
             success: function (result) {
                 console.log(JSON.stringify(result));
-                $("#text").html(result['first']['from'] + "   " + result['second']['city']);
+                var current = "TTL = " + ttl + " |  From " + result['first']['from'] + " " + result['second']['city'] + "<br>";
+                $("#text").html($("#text").html() + current);
+
+                $("#button-commit").prop('disabled', false);
+            },
+            error: function (result) {
+                $("#text").html(JSON.stringify(result));
+                $("#button-commit").prop('disabled', false);
             }
         });
+        $("#button-commit").prop('disabled', true);
+        $("#ttl").val(++ttl);
     }
 </script>
 </body>
