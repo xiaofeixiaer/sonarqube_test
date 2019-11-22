@@ -6,7 +6,11 @@ plugins {
     kotlin("jvm") version "1.3.50"
     kotlin("plugin.spring") version "1.3.50"
     kotlin("plugin.jpa") version "1.3.50"
+    id("com.google.cloud.tools.jib") version "1.8.0"
 }
+
+jib.from.image = "openjdk:8-jdk-alpine"
+jib.to.image = "localhost:5000/trace"
 
 group = "com.hw.tools.route"
 version = "0.0.1-SNAPSHOT"
