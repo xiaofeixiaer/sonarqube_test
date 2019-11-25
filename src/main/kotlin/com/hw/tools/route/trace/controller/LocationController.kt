@@ -6,6 +6,7 @@ import com.hw.tools.route.trace.service.data.IpLocation
 import com.hw.tools.route.trace.service.data.IpLocationNative
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
@@ -16,12 +17,12 @@ class LocationController(
 ) {
 
     @GetMapping("/native")
-    fun nativeLocation(host: String): IpLocationNative {
+    fun nativeLocation(@RequestParam host: String): IpLocationNative {
         return ipLocationNativeService.location(host)
     }
 
     @GetMapping("/taobao")
-    fun getLocation(host: String): IpLocation {
+    fun getLocation(@RequestParam host: String): IpLocation {
         return IpLocationTaoBaoService.queryLocation(host)
     }
 }
