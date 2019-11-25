@@ -1,5 +1,6 @@
 package com.hw.tools.route.trace.service
 
+import com.hw.tools.route.trace.config.TraceProperty
 import com.hw.tools.route.trace.service.data.IpLocationNative
 import com.maxmind.geoip2.DatabaseReader
 import org.springframework.stereotype.Service
@@ -7,12 +8,14 @@ import org.springframework.util.ResourceUtils
 import java.net.InetAddress
 
 @Service
-class IpLocationNativeService {
+class IpLocationNativeService(
+        traceProperty: TraceProperty
+) {
 
     private final var reader: DatabaseReader
 
     init {
-        val dbFile = ResourceUtils.getFile("classpath:geoip/GeoLite2-City.mmdb")
+        val dbFile = ResourceUtils.getFile(traceProperty.geoIpDb)
         this.reader = DatabaseReader.Builder(dbFile)
                 .locales(listOf("zh-CN"))
                 .build()
