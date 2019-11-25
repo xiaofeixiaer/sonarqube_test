@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/location")
 class LocationController(
         val ipLocationNativeService: IpLocationNativeService,
-        val IpLocationTaoBaoService: IpLocationTaoBaoService
+        val ipLocationTaoBaoService: IpLocationTaoBaoService
 ) {
 
     @GetMapping("/native")
@@ -23,6 +23,6 @@ class LocationController(
 
     @GetMapping("/taobao")
     fun getLocation(@RequestParam host: String): IpLocation {
-        return IpLocationTaoBaoService.queryLocation(host)
+        return ipLocationTaoBaoService.queryLocation(host)
     }
 }
