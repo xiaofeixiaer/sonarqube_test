@@ -26,15 +26,17 @@
         var ip = $("#ip").val();
         var ttl = $("#ttl").val();
         $.ajax({
-            url: "/Tracer",
-            data: {
+            url: "/ping",
+            data: JSON.stringify({
                 host: ip,
                 ttl: ttl
-            },
-            method: 'GET',
+            }),
+            dataType: "json",
+            contentType: "application/json;charset=utf-8",
+            method: 'POST',
             success: function (result) {
                 console.log(JSON.stringify(result));
-                var current = "TTL = " + ttl + " |  From " + result['first']['from'] + " " + result['second']['city'] + "<br>";
+                var current = "TTL = " + ttl + " |  From " + JSON.stringify(result) + "<br>";
                 $("#text").html($("#text").html() + current);
 
                 $("#button-commit").prop('disabled', false);

@@ -2,15 +2,12 @@ package com.hw.tools.route.trace.service
 
 import com.hw.tools.route.trace.service.data.IpInfoResponse
 import com.hw.tools.route.trace.service.data.IpLocation
-import org.springframework.http.MediaType
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.client.getForObject
-import java.nio.charset.StandardCharsets
 
 @Service
-class IpLocationService(
+class IpLocationTaoBaoService(
         private val restTemplate: RestTemplate = RestTemplate()
 ) {
 
@@ -27,11 +24,5 @@ class IpLocationService(
     companion object {
         const val HOST_KEY_NAME = "ip"
         const val QUERY_API_URL = "http://ip.taobao.com/service/getIpInfo2.php?ip={${HOST_KEY_NAME}}"
-    }
-}
-
-class TBMappingJackson2HttpMessageConverter : MappingJackson2HttpMessageConverter() {
-    init {
-        this.supportedMediaTypes = listOf(MediaType("text", "html", StandardCharsets.UTF_8))
     }
 }

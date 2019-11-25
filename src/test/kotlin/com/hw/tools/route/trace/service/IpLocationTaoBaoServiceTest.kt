@@ -6,15 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 
 @SpringBootTest
-internal class IpLocationServiceTest {
+internal class IpLocationTaoBaoServiceTest {
 
     @Autowired
-    private lateinit var ipLocationService: IpLocationService
+    private lateinit var ipLocationTaoBaoService: IpLocationTaoBaoService
 
     @Test
     fun `should get ip location by ip`() {
         val host = "61.135.169.125"
-        val ipLocation = ipLocationService.queryLocation(host)
+        val ipLocation = ipLocationTaoBaoService.queryLocation(host)
         assertEquals(ipLocation.ip, host)
         assertEquals(ipLocation.country, "中国")
         assertEquals(ipLocation.region, "北京")
