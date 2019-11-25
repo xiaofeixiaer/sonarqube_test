@@ -12,7 +12,7 @@ internal class PingServiceTest {
     private lateinit var pingService: PingService
 
     @Test
-    fun `should return right ping response when ping localhost`() {
+    fun `should return right ping response when ping dns`() {
         val host = "8.8.8.8"
         val result = pingService.ping(host)
         assertEquals("8.8.8.8", result.from)
