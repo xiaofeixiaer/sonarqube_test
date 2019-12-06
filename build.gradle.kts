@@ -35,6 +35,7 @@ dependencies {
     implementation("org.flywaydb:flyway-core")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2")
     runtimeOnly("com.h2database:h2")
 
     implementation("io.springfox:springfox-swagger-ui:2.9.2")
