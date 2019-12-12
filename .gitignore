@@ -32,5 +32,5 @@ out/
 .vscode/
 
 ### h2 db catch ##
-/data/
+*/h2-data-home
 *.mv.db
