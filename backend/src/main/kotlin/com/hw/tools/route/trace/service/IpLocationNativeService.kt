@@ -3,22 +3,26 @@ package com.hw.tools.route.trace.service
 import com.hw.tools.route.trace.config.TraceProperty
 import com.hw.tools.route.trace.service.data.IpLocationNative
 import com.maxmind.geoip2.DatabaseReader
+import org.springframework.core.io.ResourceLoader
 import org.springframework.stereotype.Service
-import org.springframework.util.ResourceUtils
 import java.net.InetAddress
 
 @Service
 class IpLocationNativeService(
-        traceProperty: TraceProperty
+        traceProperty: TraceProperty,
+        resourceLoader: ResourceLoader
 ) {
 
-    private final var reader: DatabaseReader
+    private final lateinit var reader: DatabaseReader
 
     init {
-        val dbFile = ResourceUtils.getFile(traceProperty.geoIpDb)
-        this.reader = DatabaseReader.Builder(dbFile)
-                .locales(listOf("zh-CN"))
-                .build()
+        val dbStoreSteam = resourceLoader.getResource(traceProperty.geoIpDb).inputStream
+
+        dbStoreSteam.use {
+            this.reader = DatabaseReader.Builder(it)
+                    .locales(listOf("zh-CN"))
+                    .build()
+        }
     }
 
     fun location(host: String): IpLocationNative {
