@@ -8,31 +8,40 @@ function Ping() {
     const [currentState, setCurrentState] = useState({
         routes: [],
         ip: "",
-        ttl: 1
+        ttl: 0
     });
 
+
     useEffect(() => {
-        next();
+        function next() {
+            const {ip, ttl} = currentState;
+
+            if (ip === "") {
+                return
+            }
+
+            Axios.post("/ping", {
+                host: ip,
+                ttl: ttl
+            }).then((response) => {
+                const {routes, ip, ttl} = currentState;
+                routes.push(response.data);
+
+                setCurrentState({
+                    routes: routes,
+                    ip: ip,
+                    ttl: ttl + 1
+                });
+            }).catch((e) => {
+                console.log(e)
+            })
+        }
+        next()
     }, [currentState.ttl]);
 
-    function next() {
-        const {ip, ttl} = currentState;
 
-        Axios.post("/ping", {
-            host: ip,
-            ttl: ttl
-        }).then((response) => {
-            const {routes, ip, ttl} = currentState;
-            routes.push(response.data);
-
-            setCurrentState({
-                routes: routes,
-                ip: ip,
-                ttl: ttl + 1
-            });
-        }).catch((e) => {
-            console.log(e)
-        })
+    function start() {
+        setCurrentState({...currentState, ttl: 1})
     }
 
     function extracted() {
@@ -53,7 +62,7 @@ function Ping() {
 
             <Input value={currentState.ip} onChange={handleInput}/>
 
-            <Button onClick={next}>
+            <Button onClick={start}>
                 Start
             </Button>
 
