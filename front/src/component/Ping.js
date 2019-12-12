@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import Axios from "axios";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
@@ -11,9 +11,9 @@ function Ping() {
         ttl: 1
     });
 
-    useCallback(() => {
+    useEffect(() => {
         next();
-    }, currentState.ttl);
+    }, [currentState.ttl]);
 
     function next() {
         const {ip, ttl} = currentState;
@@ -30,12 +30,14 @@ function Ping() {
                 ip: ip,
                 ttl: ttl + 1
             });
+        }).catch((e) => {
+            console.log(e)
         })
     }
 
-    function extracted(it) {
+    function extracted() {
         return (
-            <p>{JSON.parse(it)}</p>
+            <p>{JSON.stringify(currentState.routes)}</p>
         )
     }
 
@@ -55,9 +57,7 @@ function Ping() {
                 Start
             </Button>
 
-            {currentState.routes.forEach((it) => {
-                extracted(it);
-            })}
+            {extracted()}
         </div>
     );
 }
