@@ -7,38 +7,35 @@ function Ping() {
 
     const [currentState, setCurrentState] = useState({
         routes: [],
-        ip: "",
+        host: "",
         ttl: 0
     });
 
+    function next() {
+        const {host, ttl} = currentState;
 
-    useEffect(() => {
-        function next() {
-            const {ip, ttl} = currentState;
-
-            if (ip === "") {
-                return
-            }
-
-            Axios.post("/ping", {
-                host: ip,
-                ttl: ttl
-            }).then((response) => {
-                const {routes, ip, ttl} = currentState;
-                routes.push(response.data);
-
-                setCurrentState({
-                    routes: routes,
-                    ip: ip,
-                    ttl: ttl + 1
-                });
-            }).catch((e) => {
-                console.log(e)
-            })
+        if (host === "") {
+            return
         }
-        next()
-    }, [currentState.ttl]);
 
+        Axios.post("/ping", {
+            host: host,
+            ttl: ttl
+        }).then((response) => {
+            const {routes, host, ttl} = currentState;
+            routes.push(response.data);
+
+            setCurrentState({
+                routes: routes,
+                ip: host,
+                ttl: ttl + 1
+            });
+        }).catch((e) => {
+            console.log(e)
+        })
+    }
+
+    useEffect(next, [currentState.ttl]);
 
     function start() {
         setCurrentState({...currentState, ttl: 1})
@@ -60,7 +57,7 @@ function Ping() {
     return (
         <div className="App">
 
-            <Input value={currentState.ip} onChange={handleInput}/>
+            <Input value={currentState.ip} onChange={handleInput} type="text"/>
 
             <Button onClick={start}>
                 Start
