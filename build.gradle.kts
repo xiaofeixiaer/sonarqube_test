@@ -9,10 +9,10 @@ sonarqube {
         property("sonar.host.url", "http://10.206.20.178:9000")
         property("sonar.login", "d0faadbc6c590891ff79b546da84cf03c0c2af52")
 //        property("sonar.password", "admin")
-        property("sonar.profile","FindBugs Security Audit")
-        property("sonar.profile","Sonar way")
-        property("sonar.profile","Sonar way Recommended")
-        property("sonar.profile","Sonar way recommended")
+//        property("sonar.profile","FindBugs Security Audit")
+//        property("sonar.profile","Sonar way")
+//        property("sonar.profile","Sonar way Recommended")
+//        property("sonar.profile","Sonar way recommended")
     }
 }
 

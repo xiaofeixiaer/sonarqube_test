@@ -23,13 +23,21 @@ function Ping() {
             ttl: ttl
         }).then((response) => {
             const {routes, host, ttl} = currentState;
-            routes.push(response.data);
 
-            setCurrentState({
-                routes: routes,
-                ip: host,
-                ttl: ttl + 1
-            });
+            function isPingEnd() {
+                return !routes[routes.length - 1] || routes[routes.length - 1].host !== response.data.host;
+            }
+
+            if (isPingEnd()) {
+                routes.push(response.data);
+
+                setCurrentState({
+                    routes: routes,
+                    host: host,
+                    ttl: ttl + 1
+                });
+            }
+
         }).catch((e) => {
             console.log(e)
         })
@@ -48,7 +56,7 @@ function Ping() {
     }
 
     function handleInput(event) {
-        currentState.ip = event.target.value;
+        currentState.host = event.target.value;
         setCurrentState({
             ...currentState
         })
