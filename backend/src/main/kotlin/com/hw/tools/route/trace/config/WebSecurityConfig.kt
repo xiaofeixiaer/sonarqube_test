@@ -10,6 +10,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 class WebSecurityConfig : WebSecurityConfigurerAdapter() {
 
     override fun configure(http: HttpSecurity) {
+        super.configure(http)
+
         http.csrf().disable()
                 .formLogin()
                 .successHandler { _, _, _ -> println("Success") }
@@ -19,7 +21,5 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
                         response.status = 401
                     }
                 }
-
-        super.configure(http)
     }
 }
