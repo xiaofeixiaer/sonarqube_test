@@ -11,6 +11,21 @@ function Ping() {
         ttl: 1
     });
 
+    function isPingEnd(response, routes) {
+        if (routes.length === 0) {
+            return false;
+        }
+        return routes[routes.length - 1].from === response.data.from
+    }
+
+    function getLocation(ip) {
+        return Axios.get("/location/native",
+            {
+                params: {host: ip}
+            }
+        )
+    }
+
     function next() {
         const {host, ttl} = currentState;
 
@@ -24,22 +39,27 @@ function Ping() {
         }).then((response) => {
             const {routes, host, ttl} = currentState;
 
-            function isPingEnd() {
-                if (routes.length === 0) {
-                    return false;
-                }
-                return routes[routes.length - 1].from === response.data.from
-            }
-
-            if (isPingEnd()) {
+            if (isPingEnd(response, routes)) {
                 return;
             }
 
-            routes.push(response.data);
-            setCurrentState({
-                routes: routes,
-                host: host,
-                ttl: ttl + 1
+            const data = response.data;
+            const location = getLocation(data.from);
+
+            location.then(locationResponse => {
+                routes.push({...data, location: locationResponse.data});
+                setCurrentState({
+                    routes: routes,
+                    host: host,
+                    ttl: ttl + 1
+                });
+            }).catch(ex => {
+                routes.push({...data});
+                setCurrentState({
+                    routes: routes,
+                    host: host,
+                    ttl: ttl + 1
+                });
             });
 
         }).catch((e) => {
