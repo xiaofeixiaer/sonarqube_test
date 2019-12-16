@@ -57,12 +57,6 @@ export default function SignIn() {
         })
     }
 
-    const [open, setOpen] = useState(false);
-
-    function handleClose() {
-        setOpen(false);
-    }
-
     function signIn() {
         let data = new FormData();
         data.append("username", param.username);
@@ -75,8 +69,14 @@ export default function SignIn() {
         }).then((response) => {
             history.push("/ping")
         }).catch(ex => {
-            setOpen(true);
+            setOpen(true)
         })
+    }
+
+    const [open, setOpen] = useState(false);
+
+    function handleClose() {
+        setOpen(false);
     }
 
     return (
@@ -139,29 +139,28 @@ export default function SignIn() {
                         </Grid>
                     </Grid>
                 </form>
-
-                <div>
-                    <Dialog
-                        open={open}
-                        onClose={handleClose}
-                        aria-labelledby="alert-dialog-title"
-                        aria-describedby="alert-dialog-description"
-                    >
-                        <DialogTitle id="alert-dialog-title">{"Login Failure"}</DialogTitle>
-                        <DialogContent>
-                            <DialogContentText id="alert-dialog-description">
-                                user: user
-                                <br/>
-                                password: [is random]
-                            </DialogContentText>
-                        </DialogContent>
-                        <DialogActions>
-                            <Button onClick={handleClose} color="primary">
-                                Close
-                            </Button>
-                        </DialogActions>
-                    </Dialog>
-                </div>
+            </div>
+            <div>
+                <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">{"Login Failure"}</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            user: user
+                            <br/>
+                            password: [is random]
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleClose} color="primary">
+                            Close
+                        </Button>
+                    </DialogActions>
+                </Dialog>
             </div>
         </Container>
     );
