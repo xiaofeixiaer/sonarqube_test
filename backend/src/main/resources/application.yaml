@@ -8,6 +8,12 @@ spring:
     database: h2
     hibernate:
       ddl-auto: update
+  session:
+    jdbc:
+      save-mode: on_set_attribute
+  h2:
+    console:
+      enabled: true
 
 app.trace:
   geo-ip-db: classpath:geoip/GeoLite2-City.mmdb

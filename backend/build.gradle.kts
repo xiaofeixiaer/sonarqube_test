@@ -35,6 +35,8 @@ dependencies {
     implementation("org.flywaydb:flyway-core")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("org.springframework.session:spring-session-core")
+    /*TODO coroutines kotlin, 协程支持, 大概是不需要使用到依赖包*/
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.2")
     runtimeOnly("com.h2database:h2")
 
@@ -46,6 +48,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
+    testImplementation("org.springframework.security:spring-security-test")
 }
 
 tasks.withType<Test> {
