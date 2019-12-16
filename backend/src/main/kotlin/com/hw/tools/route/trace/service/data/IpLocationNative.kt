@@ -12,4 +12,18 @@ data class IpLocationNative(
         val registeredCountry: String,
         val subdivisions: List<Subdivision>,
         val traits: Traits
-)
+) {
+    companion object {
+        val Unknown = IpLocationNative(
+                city = "unknown",
+                country = "unknown",
+                continent = Continent(),
+                location = Location(),
+                maxMind = MaxMind(),
+                postal = Postal(),
+                registeredCountry = "unknown",
+                subdivisions = listOf(),
+                traits = Traits()
+        )
+    }
+}

@@ -18,4 +18,11 @@ internal class IpLocationNativeServiceTest {
         assertEquals("北京", location.city)
     }
 
+    @Test
+    fun `should get unknown message when host is localhost`(){
+        val host = "localhost"
+        val location = ipLocationNativeService.location(host)
+        assertEquals("unknown", location.city)
+    }
+
 }
