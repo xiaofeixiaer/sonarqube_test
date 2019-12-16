@@ -8,7 +8,7 @@ function Ping() {
     const [currentState, setCurrentState] = useState({
         routes: [],
         host: "",
-        ttl: 0
+        ttl: 1
     });
 
     function next() {
@@ -25,18 +25,22 @@ function Ping() {
             const {routes, host, ttl} = currentState;
 
             function isPingEnd() {
-                return !routes[routes.length - 1] || routes[routes.length - 1].host !== response.data.host;
+                if (routes.length === 0) {
+                    return false;
+                }
+                return routes[routes.length - 1].from === response.data.from
             }
 
             if (isPingEnd()) {
-                routes.push(response.data);
-
-                setCurrentState({
-                    routes: routes,
-                    host: host,
-                    ttl: ttl + 1
-                });
+                return;
             }
+
+            routes.push(response.data);
+            setCurrentState({
+                routes: routes,
+                host: host,
+                ttl: ttl + 1
+            });
 
         }).catch((e) => {
             console.log(e)
@@ -44,10 +48,6 @@ function Ping() {
     }
 
     useEffect(next, [currentState.ttl]);
-
-    function start() {
-        setCurrentState({...currentState, ttl: 1})
-    }
 
     function extracted() {
         return (
@@ -67,7 +67,7 @@ function Ping() {
 
             <Input value={currentState.ip} onChange={handleInput} type="text"/>
 
-            <Button onClick={start}>
+            <Button onClick={next}>
                 Start
             </Button>
 
