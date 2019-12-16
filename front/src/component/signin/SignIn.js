@@ -10,7 +10,12 @@ import Link from "@material-ui/core/Link";
 import Checkbox from "@material-ui/core/Checkbox";
 import makeStyles from "@material-ui/core/styles/makeStyles";
 import Axios from "axios";
-import {useHistory} from "react-router-dom";
+import {useHistory} from "react-router";
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogActions from "@material-ui/core/DialogActions";
 
 export default function SignIn() {
 
@@ -52,17 +57,25 @@ export default function SignIn() {
         })
     }
 
+    const [open, setOpen] = useState(false);
+
+    function handleClose() {
+        setOpen(false);
+    }
+
     function signIn() {
+        let data = new FormData();
+        data.append("username", param.username);
+        data.append("password", param.password);
+
         Axios({
             url: "/login",
-            data: param,
-            method: "post"
+            method: "post",
+            data: data
         }).then((response) => {
-            debugger
             history.push("/ping")
         }).catch(ex => {
-            debugger
-            history.push("/ping")
+            setOpen(true);
         })
     }
 
@@ -79,10 +92,10 @@ export default function SignIn() {
                         margin="normal"
                         required
                         fullWidth
-                        id="email"
-                        label="Email Address"
-                        name="email"
-                        autoComplete="email"
+                        id="username"
+                        label="Username"
+                        name="username"
+                        autoComplete="username"
                         autoFocus
                         value={param.username}
                         onChange={usernameOnChange}
@@ -105,7 +118,6 @@ export default function SignIn() {
                         label="Remember me"
                     />
                     <Button
-                        type="submit"
                         fullWidth
                         variant="contained"
                         color="primary"
@@ -127,6 +139,29 @@ export default function SignIn() {
                         </Grid>
                     </Grid>
                 </form>
+
+                <div>
+                    <Dialog
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    >
+                        <DialogTitle id="alert-dialog-title">{"Login Failure"}</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-description">
+                                user: user
+                                <br/>
+                                password: [is random]
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={handleClose} color="primary">
+                                Close
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+                </div>
             </div>
         </Container>
     );

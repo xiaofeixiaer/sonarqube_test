@@ -11,6 +11,15 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
 
     override fun configure(http: HttpSecurity) {
         http.csrf().disable()
+                .formLogin()
+                .successHandler { _, _, _ -> println("Success") }
+                .failureHandler { _, response, _ ->
+                    run {
+                        println("Failure")
+                        response.status = 401
+                    }
+                }
+
         super.configure(http)
     }
 }

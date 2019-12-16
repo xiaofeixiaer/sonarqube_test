@@ -11,6 +11,8 @@ function App() {
                 <Switch>
                     <Route path={["/ping"]} component={Ping}/>
                     <Route path={["/signIn"]} component={SignIn}/>
+
+                    <Route component={Ping}/>
                 </Switch>
             </div>
         </HashRouter>
