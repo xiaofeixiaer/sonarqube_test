@@ -13,13 +13,15 @@
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.3.0",
+    "sonarqube-scanner": "^2.5.0",
     "typescript": "~3.7.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "sonarqube": "sonar-scanner -Dsonar.host.url=http://10.206.20.178:9000 -Dsonar.login=d0faadbc6c590891ff79b546da84cf03c0c2af52"
   },
   "eslintConfig": {
     "extends": "react-app"
