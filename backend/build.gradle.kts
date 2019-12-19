@@ -8,6 +8,7 @@ plugins {
     kotlin("plugin.jpa") version "1.3.50"
     id("com.google.cloud.tools.jib") version "1.8.0"
     id("org.owasp.dependencycheck") version "5.2.4"
+    id("jacoco")
 }
 
 jib.from.image = "openjdk:8-jdk-alpine"
